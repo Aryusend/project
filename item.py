@@ -4,6 +4,7 @@ class Item:
     def __init__(self):
         self.mushroom = load_image('mushroom.png')
         self.flower = load_image('flower.png')
+        self.star = load_image('star.png')
         self.x,self.y=0,0
         self.activate=False
         self.acount=0
@@ -18,4 +19,6 @@ class Item:
     def draw(self):
         if self.state==1:self.mushroom.draw(self.x,self.y)
         elif self.state == 2: self.flower.draw(self.x, self.y)
+        elif self.state == 3: self.star.draw(self.x, self.y)
+
 
