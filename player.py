@@ -56,6 +56,3 @@ class Player:
                 self.FseeR.clip_draw(self.frame * 32, 0, 32, 64, self.x, self.y)
 
 
-
-
-
