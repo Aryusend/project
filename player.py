@@ -31,12 +31,10 @@ class Player:
             self.x += self.dir * 8
         if self.collision==False:
             self.y-=8
-            self.jumping=False
+            #self.jumping=False
         if self.jumping==True and self.jumpcounter<6:
             self.y+=32
             self.jumpcounter+=1
-
-
 
 
     def draw(self):

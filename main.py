@@ -2,6 +2,7 @@ from pico2d import *
 import player
 import level
 import item
+
 open_canvas()
 sky=load_image('background.png')
 mario=player.Player()
@@ -49,13 +50,17 @@ while gameplaying:
 
     sky.draw(400,300)
 
-    mario.draw()
-    mario.update()
+    mush.draw()
+    flower.draw()
+    star.draw()
 
-    level.drawStage(1,ground1,bricks1,itemboxs1)
+    level.drawStage(1, ground1, bricks1, itemboxs1)
     for i in range(4): itemboxs1[i].update()
 
 
+
+    mario.draw()
+    mario.update()
 
     mario.collision=False
     for i in range(60):
@@ -109,9 +114,7 @@ while gameplaying:
         for i in range(4):
             itemboxs1[i].x -= mario.dir*8
 
-    mush.draw()
-    flower.draw()
-    star.draw()
+
 
     if itemboxs1[0].state==0: mush.activate=True
     if itemboxs1[1].state == 0: flower.activate = True
