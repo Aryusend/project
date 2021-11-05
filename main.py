@@ -36,8 +36,10 @@ def handle_events():
 
 
 gameplaying=True
-mario.x,mario.y=32*3,32*3
-ground1,bricks1,itemboxs1 = level.stage1()
+mario.x, mario.y = 32 * 3, 32 * 3
+g1n,ground1,b1n,bricks1,i1n,itemboxs1 = level.stage1()
+
+
 mush.x, mush.y,mush.state = itemboxs1[0].x, itemboxs1[0].y,1
 flower.x, flower.y,flower.state= itemboxs1[1].x, itemboxs1[1].y,2
 star.x, star.y,star.state= itemboxs1[3].x, itemboxs1[3].y,3
@@ -47,20 +49,13 @@ while gameplaying:
 
     sky.draw(400,300)
 
-    mush.draw()
-    flower.draw()
-    star.draw()
-
-    for i in range(60):ground1[i].draw()
-    for i in range(3): bricks1[i].draw()
-    for i in range(4):
-        itemboxs1[i].draw()
-        itemboxs1[i].update()
-
-
-
     mario.draw()
     mario.update()
+
+    level.drawStage(1,ground1,bricks1,itemboxs1)
+    for i in range(4): itemboxs1[i].update()
+
+
 
     mario.collision=False
     for i in range(60):
@@ -114,7 +109,9 @@ while gameplaying:
         for i in range(4):
             itemboxs1[i].x -= mario.dir*8
 
-
+    mush.draw()
+    flower.draw()
+    star.draw()
 
     if itemboxs1[0].state==0: mush.activate=True
     if itemboxs1[1].state == 0: flower.activate = True
