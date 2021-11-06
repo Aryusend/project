@@ -62,48 +62,12 @@ while gameplaying:
     mario.draw()
     mario.update()
 
-    mario.collision=False
-    for i in range(60):
-        for mx in range(mario.x-16,mario.x+16):
-            if mx >ground1[i].x-16 and mx <ground1[i].x+16:
-                for my in range(mario.y-16,mario.y+16):
-                    if my > ground1[i].y - 16 and my < ground1[i].y + 16:
-                        mario.collision=True
-                        if my>ground1[i].y:yy=ground1[i].y+32
-                        else : yy=ground1[i].y
-                        break
-            if mario.collision==True : break
+    player.player_block_collider(mario,ground1,g1n)
+    player.player_block_collider(mario,itemboxs1,i1n)
+    player.player_block_collider(mario,bricks1,b1n)
 
-    for i in range(4):
-        for mx in range(mario.x-16,mario.x+16):
-            if mx >itemboxs1[i].x-16 and mx <itemboxs1[i].x+16:
-                for my in range(mario.y-16,mario.y+16):
-                    if my > itemboxs1[i].y - 16 and my < itemboxs1[i].y + 16:
-                        mario.collision=True
-                        if my>itemboxs1[i].y:yy=itemboxs1[i].y+32
-                        else :
-                            yy=itemboxs1[i].y-32
-                            itemboxs1[i].state=0
-                            break
-            if mario.collision==True : break
 
-    for i in range(3):
-        if bricks1[i].state==0:continue
-        for mx in range(mario.x-16,mario.x+16):
-            if mx >bricks1[i].x-16 and mx <bricks1[i].x+16:
-                for my in range(mario.y-16,mario.y+16):
-                    if my > bricks1[i].y - 16 and my < bricks1[i].y + 16:
-                        mario.collision=True
-                        if my>bricks1[i].y:yy=bricks1[i].y+32
-                        else :
-                            yy=bricks1[i].y-32
-                            bricks1[i].state=0
-                            break
 
-    if mario.collision==True:
-        mario.y = yy
-        mario.jumping=False
-        mario.jumpcounter=0
 
 
     if mario.x>400and mario.running==True:
