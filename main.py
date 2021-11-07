@@ -96,6 +96,7 @@ while gameplaying:
                 if my > mush.y - 16 and my < mush.y + 16:
                     if mush.state>0:
                         mario.state=2
+                        mario.ly=32
                         mush.state=0
 
     for mx in range(mario.x - 16, mario.x + 16):
@@ -104,6 +105,7 @@ while gameplaying:
                 if my > flower.y - 16 and my < flower.y + 16:
                     if flower.state>0:
                         mario.state=3
+                        mario.ly=32
                         flower.state=0
 
 

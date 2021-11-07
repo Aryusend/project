@@ -45,14 +45,14 @@ class Player:
                 self.seeR.clip_draw(self.frame * 32, 0, 32, 32, self.x, self.y)
         elif self.state==2:
             if self.dir < 0:
-                self.BseeL.clip_draw(self.frame * 32, 0, 32, 64, self.x, self.y)
+                self.BseeL.clip_draw(self.frame * 32, 0, 32, 64, self.x, self.y+16)
             else:
-                self.BseeR.clip_draw(self.frame * 32, 0, 32, 64, self.x, self.y)
+                self.BseeR.clip_draw(self.frame * 32, 0, 32, 64, self.x, self.y+16)
         elif self.state==3:
             if self.dir < 0:
-                self.FseeL.clip_draw(self.frame * 32, 0, 32, 64, self.x, self.y)
+                self.FseeL.clip_draw(self.frame * 32, 0, 32, 64, self.x, self.y+16)
             else:
-                self.FseeR.clip_draw(self.frame * 32, 0, 32, 64, self.x, self.y)
+                self.FseeR.clip_draw(self.frame * 32, 0, 32, 64, self.x, self.y+16)
 
 
 
