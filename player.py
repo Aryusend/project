@@ -84,3 +84,17 @@ def player_block_collider(player,block,num):
         player.jumping=False
         player.jumpcounter=0
 
+
+def player_item_collider(player,item):
+    for mx in range(player.x - 16, player.x + 16):
+        if mx > item.x - 16 and mx < item.x + 16:
+            for my in range(player.y - 16, player.y + 16):
+                if my > item.y - 16 and my < item.y + 16:
+                    if item.state==1:
+                        player.state=2
+                        player.ly=32
+                        item.state=0
+                    if item.state==2:
+                        player.state=3
+                        player.ly=32
+                        item.state=0

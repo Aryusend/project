@@ -90,25 +90,9 @@ while gameplaying:
     mush.x,flower.x=itemboxs1[0].x,itemboxs1[1].x
     star.x=itemboxs1[3].x
 
-    for mx in range(mario.x - 16, mario.x + 16):
-        if mx > mush.x - 16 and mx < mush.x + 16:
-            for my in range(mario.y - 16, mario.y + 16):
-                if my > mush.y - 16 and my < mush.y + 16:
-                    if mush.state>0:
-                        mario.state=2
-                        mario.ly=32
-                        mush.state=0
 
-    for mx in range(mario.x - 16, mario.x + 16):
-        if mx > flower.x - 16 and mx < flower.x + 16:
-            for my in range(mario.y - 16, mario.y + 16):
-                if my > flower.y - 16 and my < flower.y + 16:
-                    if flower.state>0:
-                        mario.state=3
-                        mario.ly=32
-                        flower.state=0
-
-
+    player.player_item_collider(mario,mush)
+    player.player_item_collider(mario,flower)
 
 
     update_canvas()
