@@ -67,9 +67,6 @@ while gameplaying:
     player.player_block_collider(mario,bricks1,b1n)
 
 
-
-
-
     if mario.x>400and mario.running==True:
         for i in range(60):
             ground1[i].x-=mario.dir*8
