@@ -23,6 +23,7 @@ def clear():
     for l in objects:
         l.clear()
 
+
 def destroy():
     clear()
     objects.clear()

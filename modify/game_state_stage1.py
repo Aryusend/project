@@ -12,14 +12,6 @@ def enter():
     mario = Mario()
     world.add_object(mario, 1)
 
-    g1n,ground1,b1n,bricks,i1n,itembox1=blocks.stage1()
-    for i in range(g1n): world.add_object(ground1[i],1)
-    for i in range(b1n): world.add_object(bricks[i],1)
-    for i in range(i1n): world.add_object(itembox1[i],1)
-
-
-
-
 def exit():
     world.clear()
 
@@ -37,6 +29,7 @@ def handle_events():
 def update():
     for object in world.all_objects():
         object.update()
+
 
 
 def draw():

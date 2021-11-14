@@ -39,7 +39,7 @@ class Mario:
 
     def update(self):
         if self.running == True:
-            self.accel+=1 * framework.frame_time
+            self.accel+= run_speed_pps * framework.frame_time
             self.velocity=self.accel
             self.velocity=clamp(0,self.velocity,0.5)
             self.frame = (self.frame + frames_per_action*action_per_time*framework.frame_time)%4.0
@@ -47,6 +47,10 @@ class Mario:
         if self.jummping==True:
             self.jumph-=8*framework.frame_time*10
             self.y+=self.jumph*framework.frame_time*10
+        if self.y<64:
+            self.y=64
+            self.jummping=False
+            self.jumph=0
 
 
     def handle_event(self,event):
