@@ -2,19 +2,35 @@ import framework
 import game_state_lobby
 from pico2d import *
 
+
+image = None
+cusor = None
+menuindex=1
 def enter():
-    pass
+    global image
+    global cusor
+    image = load_image('title.png')
+    cusor = load_image('cusor.png')
 
 def exit():
-    pass
+    global image,cusor
+    del(image)
+    del(cusor)
 
 def draw():
-    pass
+    clear_canvas()
+    image.draw(400,300)
+    if menuindex==1:
+        cusor.draw(280,260)
+    else :
+        cusor.draw(280, 200)
+    update_canvas()
 
 def update():
     pass
 
 def handle_events():
+    global menuindex
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -22,7 +38,15 @@ def handle_events():
         else:
             if (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
                 framework.quit()
+            elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_UP):
+                if menuindex == 1: menuindex = 2
+                else: menuindex=1
+            elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_DOWN):
+                if menuindex == 1: menuindex = 2
+                else:  menuindex = 1
             elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_SPACE):
-                framework.change_state(game_state_lobby)
+                if menuindex==1: framework.change_state(game_state_lobby)
+                else : framework.quit()
+
 
 

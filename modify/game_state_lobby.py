@@ -2,19 +2,94 @@ import framework
 import game_state_stage1
 from pico2d import *
 
+image = None
+image_stage1=None
+image_stage2=None
+image_stage3=None
+image_stage4=None
+marioL=None
+marioR=None
+
+marioX=100
+marioFrame=0
+marioMoving=False
+marioDir=1
+stageSelect=0
+
 def enter():
-    pass
+    global image,marioL,marioR
+    global image_stage1,image_stage2,image_stage3,image_stage4
+    image = load_image('lobby.png')
+    image_stage1 = load_image('mushroom.png')
+    image_stage2 = load_image('flower.png')
+    image_stage3 = load_image('star.png')
+    image_stage4 = load_image('cusor.png')
+    marioL= load_image('MgoingL.png')
+    marioR = load_image('MgoingR.png')
+
 
 def exit():
-    pass
+    global image,image_stage1,image_stage2,image_stage3,image_stage4,marioL,marioR
+    del(image)
+    del (image_stage1)
+    del (image_stage2)
+    del (image_stage3)
+    del (image_stage4)
+    del (marioL)
+    del (marioR)
+
 
 def draw():
-    pass
+    clear_canvas()
+    image.draw(400,300)
+    image_stage1.draw(180,80)
+    if framework.stageindex>=2: image_stage2.draw(330, 80)
+    if framework.stageindex >= 3: image_stage3.draw(480, 80)
+    if framework.stageindex >= 4: image_stage4.draw(630, 80)
+
+    if marioDir > 0: marioR.clip_draw(marioFrame * 32, 0, 32, 32, marioX, 80)
+    if marioDir < 0: marioL.clip_draw(marioFrame * 32, 0, 32, 32, marioX, 80)
+    update_canvas()
 
 def update():
-    pass
+    global marioFrame,marioMoving,marioDir,marioX,stageSelect
+    marioFrame=(marioFrame+1)%4
+    if marioMoving==True:
+        if marioDir >0:
+            if stageSelect==1:
+                if marioX<=180: marioX+=1
+                else : marioMoving=False
+            elif stageSelect==2:
+                if marioX<=330: marioX+=1
+                else : marioMoving=False
+            elif stageSelect==3:
+                if marioX<=480: marioX+=1
+                else : marioMoving=False
+            elif stageSelect==4:
+                if marioX<=630: marioX+=1
+                else : marioMoving=False
+            else : marioMoving=False
+        if marioDir <0:
+            if stageSelect==1:
+                if marioX>180: marioX-=1
+                else : marioMoving=False
+            elif stageSelect==2:
+                if marioX>330: marioX-=1
+                else : marioMoving=False
+            elif stageSelect==3:
+                if marioX>480: marioX-=1
+                else : marioMoving=False
+            elif stageSelect==4:
+                if marioX>630: marioX-=1
+                else : marioMoving=False
+            else :
+                if marioX>100: marioX-=1
+                else : marioMoving=False
+
+
 
 def handle_events():
+    global marioDir,marioMoving,stageSelect
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -22,5 +97,17 @@ def handle_events():
         else:
             if (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
                 framework.quit()
+            elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_RIGHT) and marioMoving==False:
+                if stageSelect < 4 : stageSelect+=1
+                stageSelect=clamp(0,stageSelect,framework.stageselect)
+                marioMoving=True
+                marioDir=1
+            elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_LEFT) and marioMoving==False:
+                if stageSelect > 0: stageSelect -= 1
+                stageSelect = clamp(0, stageSelect, framework.stageselect)
+                marioMoving=True
+                marioDir=-1
+
             elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_SPACE):
-                framework.change_state(game_state_stage1)
+                if stageSelect==1:
+                    framework.change_state(game_state_stage1)
