@@ -2,23 +2,28 @@ from pico2d import *
 import framework
 import game_state_lobby
 
-from mario import Mario
+import mario
 import blocks
 
-mario=None
+M=None
 ground=None
 itembox=None
 brick=None
-gn,itn,bn=0,0,0
+pipe=None
 
 def enter():
-    global mario,ground,itembox,brick,gn,itn,bn
-    mario = Mario()
-    ground,brick,itembox=blocks.stage1()
+    global M,ground,itembox,brick,pipe
+    M = mario.Mario()
+    ground,brick,itembox,pipe=blocks.stage1()
 
 
 def exit():
-    pass
+    global M, ground, itembox, brick,pipe
+    del(M)
+    del(ground)
+    del(itembox)
+    del(brick)
+    del(pipe)
 
 def handle_events():
     events = get_events()
@@ -28,18 +33,25 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             framework.quit()
         else:
-            Mario.handle_event(mario,event)
+            mario.Mario.handle_event(M,event)
 
 
 def update():
-    global itembox,ground,brick
-    Mario.update(mario)
-    for i in itembox:
-        i.update()
-    for g in ground:
-        g.update()
-    for b in brick:
-        b.update()
+    global itembox,ground,brick,pipe
+    mario.Mario.update(M)
+    blocks.updateStage(1,brick,itembox)
+
+    #블럭충돌
+
+
+
+
+    if M.y < 80:
+        M.y = 80
+        M.jummping = False
+        M.jumph = 0
+
+    #골인
     #if mario.x>400:
         #framework.stageindex=2
         #framework.change_state(game_state_lobby)
@@ -50,6 +62,6 @@ def draw():
     clear_canvas()
     sky = pico2d.load_image('background.png')
     sky.draw(400, 300)
-    Mario.draw(mario)
-    blocks.drawStage(1,ground,brick,itembox)
+    mario.Mario.draw(M)
+    blocks.drawStage(1,ground,brick,itembox,pipe)
     update_canvas()
