@@ -1,5 +1,4 @@
 from pico2d import *
-import world
 import framework
 
 pixel_per_meter=(32/1.0)
@@ -11,6 +10,7 @@ run_speed_pps=(run_speed_mph*pixel_per_meter)
 time_per_action=0.5
 action_per_time=1.0/time_per_action
 frames_per_action=8
+
 
 class Mario:
 
@@ -26,11 +26,12 @@ class Mario:
         self.h = 32
 
         #move
-        self.x,self.y=64,64
+        self.x,self.y=80,80
         self.dir=1
         self.velocity=1
         self.accel=0
         self.jumph=0
+        self.xEX=0
 
         #state
         self.running=False
@@ -39,16 +40,21 @@ class Mario:
 
     def update(self):
         if self.running == True:
-            self.accel+= run_speed_pps * framework.frame_time
-            self.velocity=self.accel
-            self.velocity=clamp(0,self.velocity,0.5)
-            self.frame = (self.frame + frames_per_action*action_per_time*framework.frame_time)%4.0
-            self.x += self.dir * self.velocity*4
+            self.accel += run_speed_pps * framework.frame_time
+            self.velocity = self.accel
+            self.velocity = clamp(0, self.velocity, 0.5)
+            self.frame = (self.frame + frames_per_action * action_per_time * framework.frame_time) % 4.0
+            if self.x<400 or self.xEX<0:
+                self.x += self.dir * self.velocity * 4
+                self.xEX=0
+            else:
+                self.xEX+= self.dir * self.velocity * 4
+
         if self.jummping==True:
             self.jumph-=8*framework.frame_time*10
             self.y+=self.jumph*framework.frame_time*10
-        if self.y<64:
-            self.y=64
+        if self.y<80:
+            self.y=80
             self.jummping=False
             self.jumph=0
 

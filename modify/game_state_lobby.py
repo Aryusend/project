@@ -1,5 +1,8 @@
 import framework
 import game_state_stage1
+import game_state_stage2
+import game_state_stage3
+import game_state_stage4
 from pico2d import *
 
 image = None
@@ -20,10 +23,10 @@ def enter():
     global image,marioL,marioR
     global image_stage1,image_stage2,image_stage3,image_stage4
     image = load_image('lobby.png')
-    image_stage1 = load_image('mushroom.png')
-    image_stage2 = load_image('flower.png')
-    image_stage3 = load_image('star.png')
-    image_stage4 = load_image('cusor.png')
+    image_stage1 = load_image('pipe.png')
+    image_stage2 = load_image('pipe2.png')
+    image_stage3 = load_image('pipe3.png')
+    image_stage4 = load_image('pipe4.png')
     marioL= load_image('MgoingL.png')
     marioR = load_image('MgoingR.png')
 
@@ -42,10 +45,10 @@ def exit():
 def draw():
     clear_canvas()
     image.draw(400,300)
-    image_stage1.draw(180,80)
-    if framework.stageindex>=2: image_stage2.draw(330, 80)
-    if framework.stageindex >= 3: image_stage3.draw(480, 80)
-    if framework.stageindex >= 4: image_stage4.draw(630, 80)
+    image_stage1.draw(180,95)
+    if framework.stageindex>=2: image_stage2.draw(330, 95)
+    if framework.stageindex >= 3: image_stage3.draw(480, 95)
+    if framework.stageindex >= 4: image_stage4.draw(630, 95)
 
     if marioDir > 0: marioR.clip_draw(marioFrame * 32, 0, 32, 32, marioX, 80)
     if marioDir < 0: marioL.clip_draw(marioFrame * 32, 0, 32, 32, marioX, 80)
@@ -99,7 +102,7 @@ def handle_events():
                 framework.quit()
             elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_RIGHT) and marioMoving==False:
                 if stageSelect < 4 : stageSelect+=1
-                stageSelect=clamp(0,stageSelect,framework.stageselect)
+                stageSelect=clamp(0,stageSelect,framework.stageindex)
                 marioMoving=True
                 marioDir=1
             elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_LEFT) and marioMoving==False:
@@ -111,3 +114,9 @@ def handle_events():
             elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_SPACE):
                 if stageSelect==1:
                     framework.change_state(game_state_stage1)
+                if stageSelect==2:
+                    framework.change_state(game_state_stage2)
+                if stageSelect==3:
+                    framework.change_state(game_state_stage3)
+                if stageSelect==4:
+                    framework.change_state(game_state_stage4)

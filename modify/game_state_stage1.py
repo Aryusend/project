@@ -1,20 +1,24 @@
 from pico2d import *
 import framework
-import world
 import game_state_lobby
 
 from mario import Mario
 import blocks
 
 mario=None
+ground=None
+itembox=None
+brick=None
+gn,itn,bn=0,0,0
 
 def enter():
-    global mario
+    global mario,ground,itembox,brick,gn,itn,bn
     mario = Mario()
-    world.add_object(mario, 1)
+    ground,brick,itembox=blocks.stage1()
+
 
 def exit():
-    world.clear()
+    pass
 
 def handle_events():
     events = get_events()
@@ -28,20 +32,24 @@ def handle_events():
 
 
 def update():
+    global itembox,ground,brick
+    Mario.update(mario)
+    for i in itembox:
+        i.update()
+    for g in ground:
+        g.update()
+    for b in brick:
+        b.update()
     #if mario.x>400:
         #framework.stageindex=2
         #framework.change_state(game_state_lobby)
-    for object in world.all_objects():
-        object.update()
-
-
-
 
 
 def draw():
+    global mario
     clear_canvas()
     sky = pico2d.load_image('background.png')
     sky.draw(400, 300)
-    for game_object in world.all_objects():
-        game_object.draw()
+    Mario.draw(mario)
+    blocks.drawStage(1,ground,brick,itembox)
     update_canvas()
