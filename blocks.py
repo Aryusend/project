@@ -14,8 +14,8 @@ class ground:
     def draw(self):
         self.image.draw(self.x-mario.marioXEX, self.y)
 
-    def update(self):
-        pass
+    def get_bb(self):
+        return self.x - 16, self.y - 16, self.x + 16, self.y + 16
 
 
 
@@ -35,6 +35,9 @@ class itembox:
     def update(self):
         self.frame = (self.frame + frames_per_action * action_per_time * framework.frame_time) % 3.0
 
+    def get_bb(self):
+        return self.x - 16, self.y - 16, self.x + 16, self.y + 16
+
 
 class brick:
     def __init__(self):
@@ -43,10 +46,15 @@ class brick:
         self.state = 1
 
     def draw(self):
-        self.image.draw(self.x-mario.marioXEX, self.y)
+        if self.state==1:
+            self.image.draw(self.x - mario.marioXEX, self.y)
+
 
     def update(self):
         pass
+
+    def get_bb(self):
+        return self.x - 16, self.y - 16, self.x + 16, self.y + 16
 
 
 class pipe:
@@ -57,8 +65,8 @@ class pipe:
     def draw(self):
         self.image.draw(self.x-mario.marioXEX, self.y)
 
-    def update(self):
-        pass
+    def get_bb(self):
+        return self.x - 32, self.y - 32, self.x + 32, self.y + 32
 
 
 #함수

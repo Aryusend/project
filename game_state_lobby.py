@@ -18,6 +18,9 @@ stage_font=None
 numimg=None
 score_font=None
 
+stage1Map=None
+stage2Map=None
+
 marioX=100
 marioFrame=0
 marioMoving=False
@@ -39,6 +42,9 @@ def enter():
     stage_font = load_image('stage_font.png')
     global score_font
     score_font=load_image('score_font.png')
+    global stage1Map,stage2Map
+    stage1Map=load_image('stage1map.png')
+    stage2Map=load_image('stage2map.png')
 
 
 
@@ -73,6 +79,11 @@ def draw():
     numimg.clip_draw(int(framework.totalscore % 1000 / 100) * 32, 0, 32, 64, 80, 540)
     numimg.clip_draw(int(framework.totalscore % 100 / 10) * 32, 0, 32, 64, 120, 540)
     numimg.clip_draw(int(framework.totalscore % 10) * 32, 0, 32, 64, 160, 540)
+
+    if stageSelect==1:
+        stage1Map.draw(400,350)
+    if stageSelect==2:
+        stage2Map.draw(400,350)
 
     update_canvas()
 

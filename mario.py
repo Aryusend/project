@@ -24,6 +24,7 @@ class Mario:
         self.BseeR = load_image('BMgoingR.png')
         self.FseeL = load_image('FMgoingL.png')
         self.FseeR = load_image('FMgoingR.png')
+        self.die = load_image('Mdie.png')
         self.frame = 0
 
         #move
@@ -38,6 +39,14 @@ class Mario:
         self.jummping=False
         self.holdflag=False
         self.state = 1  # 0 dead /1 small /2 big /3 fire /4 invincible
+
+    def get_bb(self):
+        if self.state==1:
+            return self.x-16, self.y-16, self.x+16, self.y+16
+        else :
+            return self.x-16, self.y-16, self.x+16, self.y+48
+
+
 
     def update(self):
         global marioXEX
@@ -80,7 +89,6 @@ class Mario:
             self.frame = 0
             self.accel = 0
         if event.type == SDL_KEYDOWN and event.key == SDLK_RIGHT:
-            print(self.x)
             self.dir = 1
             self.running = True
         elif event.type == SDL_KEYUP and event.key == SDLK_RIGHT:
@@ -93,7 +101,9 @@ class Mario:
 
 
     def draw(self):
-        if self.state == 1:
+        if self.state==0:
+            self.die.draw(self.x-marioXEX,self.y)
+        elif self.state == 1:
             if self.dir < 0:
                 self.seeL.clip_draw(int(self.frame) * 32, 0, 32, 32, self.x-marioXEX, self.y)
             else:
