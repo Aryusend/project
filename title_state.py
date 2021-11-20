@@ -12,6 +12,7 @@ def enter():
     image = load_image('title.png')
     cusor = load_image('cusor.png')
     framework.marioHeart=3
+    framework.totalscore=0
 
 def exit():
     global image,cusor

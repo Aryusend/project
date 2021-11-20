@@ -97,13 +97,15 @@ def exit():
     del(pipe)
 
 def handle_events():
-    global M,pipe,movingpipe
+    global M,pipe,movingpipe,timeleft
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
             framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             framework.quit()
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
+                timeleft=3
         elif event.type == SDL_KEYDOWN and event.key == SDLK_DOWN:
             if M.x>pipe[1].x-32 and M.x<pipe[1].x+32:
                 movingpipe=True
@@ -264,18 +266,14 @@ def update():
     gumba.update()
     turtle.update()
 
+
     if M.state==0 and M.y<0:
         framework.change_state(state_change)
-
     #골인
-    global flagY
-    if M.x>3200:
-        M.holdflag=True
-        framework.stageindex=2
-        if flagY>80: flagY-=32*4*framework.frame_time
 
-    if M.x>3800:
-        framework.change_state(game_state_lobby)
+
+
+
 
     #시간
     global timeleft
