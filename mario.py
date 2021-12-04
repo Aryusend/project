@@ -1,7 +1,6 @@
 from pico2d import *
 import framework
-import game_state_stage1
-import state_change
+import server
 
 pixel_per_meter=(8/1.0)
 run_speed_kmph=2
@@ -13,18 +12,12 @@ time_per_action=0.5
 action_per_time=1.0/time_per_action
 frames_per_action=8
 
-marioXEX=0
+mario_x_over=0
+
 
 class Mario:
     def __init__(self):
         #rendering
-        self.seeL = load_image('MgoingL.png')
-        self.seeR = load_image('MgoingR.png')
-        self.BseeL = load_image('BMgoingL.png')
-        self.BseeR = load_image('BMgoingR.png')
-        self.FseeL = load_image('FMgoingL.png')
-        self.FseeR = load_image('FMgoingR.png')
-        self.die = load_image('Mdie.png')
         self.frame = 0
 
         #move
@@ -49,29 +42,18 @@ class Mario:
 
 
     def update(self):
-        global marioXEX
-        #골인
-        if self.holdflag==True:
-            self.running=False
-            self.jummping=False
-            if self.y>80: self.y-=32*4*framework.frame_time
-            if game_state_stage1.flagY<=80:
-                self.x+=32*10* framework.frame_time
-
+        global mario_x_over
         #움직임
         if self.running == True:
-            #self.accel += run_speed_pps * framework.frame_time
-            #self.velocity = self.accel
-            #self.velocity = clamp(0, self.velocity, 0.5)
             self.velocity=run_speed_pps*framework.frame_time
             self.frame = (self.frame + frames_per_action * action_per_time * framework.frame_time) % 4.0
-            if self.x<400 or marioXEX<0:
+            if self.x<400 or mario_x_over<0:
                 self.x += self.dir * self.velocity
-                marioXEX=0
+                mario_x_over=0
             elif self.x>=3200:
                 self.x += self.dir * self.velocity
             else:
-                marioXEX = self.x - 400
+                mario_x_over = self.x - 400
                 self.x += self.dir * self.velocity
 
         #점프
@@ -101,21 +83,31 @@ class Mario:
 
 
     def draw(self):
+        global mario_x_over
         if self.state==0:
-            self.die.draw(self.x-marioXEX,self.y)
+            server.image_mario_small.draw(self.x-mario_x_over,self.y)
         elif self.state == 1:
             if self.dir < 0:
-                self.seeL.clip_draw(int(self.frame) * 32, 0, 32, 32, self.x-marioXEX, self.y)
+                if self.jummping==True: server.image_mario_small.clip_draw(0, 32*5, 32, 32, self.x-mario_x_over, self.y)
+                else :server.image_mario_small.clip_draw(int(self.frame) * 32, 32*7, 32, 32, self.x-mario_x_over, self.y)
             else:
-                self.seeR.clip_draw(int(self.frame) * 32, 0, 32, 32, self.x-marioXEX, self.y)
+                if self.jummping == True: server.image_mario_small.clip_draw(32, 32*5, 32, 32, self.x-mario_x_over, self.y)
+                else :server.image_mario_small.clip_draw(int(self.frame) * 32, 32*6, 32, 32, self.x-mario_x_over, self.y)
         elif self.state == 2:
             if self.dir < 0:
-                self.BseeL.clip_draw(int(self.frame) * 32, 0, 32, 64, self.x-marioXEX, self.y + 16)
+                if self.jummping == True: server.image_mario_big.clip_draw(0, 64*2, 32, 64, self.x-mario_x_over, self.y + 16)
+                else: server.image_mario_big.clip_draw(int(self.frame) * 32, 64*4, 32, 64, self.x-mario_x_over, self.y + 16)
             else:
-                self.BseeR.clip_draw(int(self.frame) * 32, 0, 32, 64, self.x-marioXEX, self.y + 16)
+                if self.jummping == True: server.image_mario_big.clip_draw(32, 64*2, 32, 64, self.x-mario_x_over, self.y + 16)
+                else :server.image_mario_big.clip_draw(int(self.frame) * 32, 64*3, 32, 64, self.x-mario_x_over, self.y + 16)
         elif self.state == 3:
             if self.dir < 0:
-                self.FseeL.clip_draw(int(self.frame) * 32, 0, 32, 64, self.x-marioXEX, self.y + 16)
+                if self.jummping == True: server.image_mario_fire.clip_draw(0, 64*2, 32, 64, self.x-mario_x_over, self.y + 16)
+                else :server.image_mario_fire.clip_draw(int(self.frame) * 32, 64*4, 32, 64, self.x-mario_x_over, self.y + 16)
             else:
-                self.FseeR.clip_draw(int(self.frame) * 32, 0, 32, 64, self.x-marioXEX, self.y + 16)
+                if self.jummping == True: server.image_mario_fire.clip_draw(32, 64*2, 32, 64, self.x-mario_x_over, self.y + 16)
+                else :server.image_mario_fire.clip_draw(int(self.frame) * 32, 64*3, 32, 64, self.x-mario_x_over, self.y + 16)
 
+
+
+player=Mario()

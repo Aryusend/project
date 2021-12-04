@@ -8,13 +8,9 @@ class GameState:
         self.update = state.update
         self.draw = state.draw
 
-stageindex=1
-stageselect=4
+
 running = None
 stack = None
-numberImage=None
-marioHeart=3
-totalscore=0
 
 
 def change_state(state):

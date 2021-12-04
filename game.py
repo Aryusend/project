@@ -1,9 +1,9 @@
 import pico2d
 import framework
-import title_state
-
-import mario
+import server
+import title
 
 pico2d.open_canvas(800, 600)
-framework.run(title_state)
+server.load_all_image()
+framework.run(title)
 pico2d.close_canvas()
