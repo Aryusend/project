@@ -40,7 +40,6 @@ class Mario:
             return self.x-16, self.y-16, self.x+16, self.y+48
 
 
-
     def update(self):
         global mario_x_over
         #움직임
@@ -107,7 +106,3 @@ class Mario:
             else:
                 if self.jummping == True: server.image_mario_fire.clip_draw(32, 64*2, 32, 64, self.x-mario_x_over, self.y + 16)
                 else :server.image_mario_fire.clip_draw(int(self.frame) * 32, 64*3, 32, 64, self.x-mario_x_over, self.y + 16)
-
-
-
-player=Mario()

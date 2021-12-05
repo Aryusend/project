@@ -32,6 +32,10 @@ def draw():
     server.image_numbers.clip_draw(int(server.total_score % 100 / 10) * 32, 0, 32, 32, 40+32*2, 540)
     server.image_numbers.clip_draw(int(server.total_score % 10) * 32, 0, 32, 32, 40+32*3, 540)
 
+    server.image_font.clip_draw(64, 0, 32, 32, 260, 570)
+    server.image_numbers.clip_draw(int(server.coin_earned % 100 / 10) * 32, 0, 32, 32, 260 + 32, 570)
+    server.image_numbers.clip_draw(int(server.coin_earned % 10) * 32, 0, 32, 32, 260 + 64, 570)
+
     if server.stage_selected == 1: server.image_stage2_map.draw(400, 350)
     elif server.stage_selected == 2: server.image_stage2_map.draw(400, 350)
     elif server.stage_selected == 3: server.image_stage2_map.draw(400, 350)

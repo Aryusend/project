@@ -1,6 +1,8 @@
 from pico2d import *
-import mario
 import framework
+import server
+import mario
+
 
 time_per_action=8
 action_per_time=1.0/time_per_action
@@ -8,7 +10,6 @@ frames_per_action=16
 
 class mushroom:
     def __init__(self):
-        self.image= load_image('mushroom.png')
         self.x, self.y = 0, 0
         self.activate = False
         self.acount = 0
@@ -26,14 +27,13 @@ class mushroom:
 
     def draw(self):
         if self.state==1:
-            self.image.draw(self.x-mario.marioXEX,self.y)
+            server.image_mushroom.draw(self.x-mario.mario_x_over,self.y)
 
     def get_bb(self):
         return self.x - 16, self.y - 16, self.x + 16, self.y + 16
 
 class flower:
     def __init__(self):
-        self.image= load_image('flower.png')
         self.x, self.y = 0, 0
         self.activate = False
         self.acount = 0
@@ -47,14 +47,13 @@ class flower:
 
     def draw(self):
         if self.state==1:
-            self.image.draw(self.x-mario.marioXEX,self.y)
+            server.image_flower.draw(self.x-mario.mario_x_over,self.y)
 
     def get_bb(self):
         return self.x - 16, self.y - 16, self.x + 16, self.y + 16
 
 class star:
     def __init__(self):
-        self.image= load_image('star.png')
         self.x, self.y = 0, 0
         self.activate = False
         self.acount = 0
@@ -68,14 +67,13 @@ class star:
 
     def draw(self):
         if self.state==1:
-            self.image.draw(self.x-mario.marioXEX,self.y)
+            server.image_star.draw(self.x-mario.mario_x_over,self.y)
 
     def get_bb(self):
         return self.x - 16, self.y - 16, self.x + 16, self.y + 16
 
 class coin:
     def __init__(self):
-        self.image = load_image('coin.png')
         self.x, self.y = 0, 0
         self.activate = False
         self.acount = 0
@@ -91,7 +89,7 @@ class coin:
 
     def draw(self):
         if self.state == 1:
-            self.image.clip_draw(int(self.frame) * 16, 0, 16, 32, self.x - mario.marioXEX, self.y)
+            server.image_coin.clip_draw(int(self.frame) * 16, 0, 16, 32, self.x - mario.mario_x_over, self.y)
 
     def get_bb(self):
         return self.x - 16, self.y - 16, self.x + 16, self.y + 16

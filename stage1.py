@@ -3,11 +3,14 @@ import framework
 import server
 import state_change
 import stage_select
-from mario import player
 import blocks
+import collision
+
+time_left=0;
 
 def enter():
-    pass
+    global time_left
+    time_left=120
 
 def exit():
     pass
@@ -17,14 +20,13 @@ def handle_events():
     for event in events:
         if event.type == SDL_QUIT: framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:  framework.quit()
-        else: player.handle_event(event)
-
+        else: server.player.handle_event(event)
 
 def update():
-    player.update()
-
-
-
+    server.player.update()
+    server.update_stage1()
+    server.update_item1()
+    collision.collision_stage1()
 
 
 
@@ -35,10 +37,26 @@ def draw():
     clear_canvas()
     server.image_background_blue.draw(400,300)
 
-    player.draw()
+    server.write_letter('score', 20, 580)
+    server.image_numbers.clip_draw(int(server.total_score / 1000) * 32, 0, 32, 32, 40 + 32 * 0, 540)
+    server.image_numbers.clip_draw(int(server.total_score % 1000 / 100) * 32, 0, 32, 32, 40 + 32 * 1, 540)
+    server.image_numbers.clip_draw(int(server.total_score % 100 / 10) * 32, 0, 32, 32, 40 + 32 * 2, 540)
+    server.image_numbers.clip_draw(int(server.total_score % 10) * 32, 0, 32, 32, 40 + 32 * 3, 540)
 
-    for ground in blocks.ground_stage1:
-        ground.draw()
+    server.image_font.clip_draw(64, 0, 32, 32, 260, 570)
+    server.image_numbers.clip_draw(int(server.coin_earned % 100 / 10) * 32, 0, 32, 32, 260 + 32, 570)
+    server.image_numbers.clip_draw(int(server.coin_earned % 10) * 32, 0, 32, 32, 260 + 64, 570)
 
+    global time_left
+    server.image_font.clip_draw(32, 0, 32, 32, 670, 570)
+    server.image_numbers.clip_draw(int(time_left / 100) * 32, 0, 32, 32, 700, 570)
+    server.image_numbers.clip_draw(int(time_left % 100 / 10) * 32, 0, 32, 32, 700+32, 570)
+    server.image_numbers.clip_draw(int(time_left % 10) * 32, 0, 32, 32, 700+64, 570)
+
+
+
+    server.player.draw()
+    server.draw_item1()
+    server.draw_stage1()
 
     update_canvas()
