@@ -1,15 +1,18 @@
 from pico2d import *
-import server
 import framework
+
+import server
+import image
 import stage_select
 
 cusor_position=1
 
 def enter():
-    server.stage_opened = 1
+    server.stage_opened = 4
     server.stage_selected = 0
     server.number_of_life = 3
     server.total_score = 0
+    server.coin_earned = 0
 
 def exit():
     pass
@@ -19,14 +22,13 @@ def draw():
 
     clear_canvas()
 
-    server.image_title.draw(400,300)
-    server.write_letter('start',344,260)
-    server.write_letter('exit',360,200)
-    server.write_letter('press space to select',80,32)
+    image.image_title.draw(400,300)
+    image.write_letter('start',344,260)
+    image.write_letter('exit',360,200)
+    image.write_letter('press space to select',80,32)
 
-    if cusor_position==1: server.image_font.clip_draw(0, 0, 32, 32, 280,260)
-    else : server.image_font.clip_draw(0, 0, 32, 32, 280, 200)
-
+    if cusor_position==1: image.image_font.clip_draw(0, 0, 32, 32, 280,260)
+    else : image.image_font.clip_draw(0, 0, 32, 32, 280, 200)
 
     update_canvas()
 

@@ -1,9 +1,11 @@
 import pico2d
 import framework
-import server
+import image
+import sound
 import title
 
 pico2d.open_canvas(800, 600)
-server.load_all_image()
+image.load_all_image()
+sound.load_sound()
 framework.run(title)
 pico2d.close_canvas()
